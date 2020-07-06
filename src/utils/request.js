@@ -1,14 +1,15 @@
 /*
  * @Author: sdx
  * @Date: 2020-07-05 17:40:35
- * @LastEditTime: 2020-07-06 17:19:59
+ * @LastEditTime: 2020-07-06 17:41:23
  * @LastEditors: Please set LastEditors
  * @Description: 对axios进行封装以满足不同的请求需要
  * @FilePath: /vue-admin-cli/src/api/config.js
  */
 
 import axios from "axios";
-import store from "@store"
+import store from "@store";
+// import NProgress from 'nprogress';
 import config from "../config";
 import { Message } from "element-ui";
 

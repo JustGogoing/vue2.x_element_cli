@@ -9,13 +9,13 @@
 <template>
   <div class="hello">
     <el-button @click="show">Button</el-button>
-    {{getToken}}
+    {{ getToken }}
   </div>
 </template>
 
 <script>
 import { get } from "../api/config";
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   name: "HelloWorld",
   props: {
@@ -27,7 +27,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getToken'])
+    ...mapGetters(["getToken"])
   }
 };
 </script>
