@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-05 17:07:38
- * @LastEditTime: 2020-07-06 12:55:26
+ * @LastEditTime: 2020-07-06 18:31:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-admin-cli/vue.config.js
@@ -17,7 +17,18 @@ module.exports = {
     }
   },
   devServer: {
-    open: true
+    open: true,
+    disableHostCheck: true,
+    port: 9000,
+    proxy: {
+      "/api": {
+        target: "http://127.0.0.1:7001/",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": ""
+        }
+      }
+    }
   },
   configureWebpack: {},
   chainWebpack(config) {

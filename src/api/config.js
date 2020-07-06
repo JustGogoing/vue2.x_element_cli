@@ -1,7 +1,7 @@
 /*
  * @Author: sdx
  * @Date: 2020-07-05 17:40:35
- * @LastEditTime: 2020-07-06 18:26:22
+ * @LastEditTime: 2020-07-06 18:27:13
  * @LastEditors: Please set LastEditors
  * @Description: 调用封装的axios,实现不同的数据请求格式
  * @FilePath: /vue-admin-cli/src/api/config.js
@@ -13,7 +13,6 @@
  * 请求的取消
  */
 
-
 import qs from "qs";
 import { Message } from "element-ui";
 
@@ -21,18 +20,18 @@ import service from "@/utils/request.js";
 
 /**
  * get 请求,
- * @param {String} url 
- * @param {Object} params 
- * @param {Object} options 
+ * @param {String} url
+ * @param {Object} params
+ * @param {Object} options
  */
 export function GET(url, params = {}, options = {}) {
-  const config = setConfig(options)
+  const config = setConfig(options);
   return new Promise((resolve, reject) => {
     service
       .get(url, params, config)
       .then(res => {
         // resolve(res);
-        errCodeHandler(res,resolve, reject)
+        errCodeHandler(res, resolve, reject);
       })
       .catch(err => {
         reject(err);
@@ -42,18 +41,18 @@ export function GET(url, params = {}, options = {}) {
 
 /**
  * post
- * @param {*} url 
- * @param {*} data 
- * @param {*} options 
+ * @param {*} url
+ * @param {*} data
+ * @param {*} options
  */
 export function POST(url, data, options = {}) {
   const config = setConfig(options);
   return new Promise((resolve, reject) => {
-    axios
+    service
       .post(url, qs.stringify(data), config)
       .then(res => {
         // resolve(res);
-        errCodeHandler(res,resolve, reject)
+        errCodeHandler(res, resolve, reject);
       })
       .catch(err => {
         reject(err);
@@ -65,24 +64,20 @@ export function POST(url, data, options = {}) {
 // delete
 // .....
 
-
 /**
  * 对于一些请求需要单独处理
- * @param {Object} options 
+ * @param {Object} options
  * @param {Object} options.type  header的几种类型, 如下
  * @param {Object} options.responseType 返回的数据类型
  * xxx  对于请求过期时间可能还要单独处理以适应上传等
  */
 function setConfig(options) {
-  const { 
-    type = 0,
-    responseType = 'json'
-  } = options;
+  const { type = 0, responseType = "json" } = options;
   const Header = setHeader(type);
   return {
     headers: Header,
     responseType
-  }
+  };
 }
 
 /**
@@ -119,22 +114,21 @@ function setHeader(type) {
   return { "Content-Type": typeStr };
 }
 
-
 /**
  * 对错误代码的处理
  */
 function errCodeHandler(res, resolve, reject) {
-  const {code, msg} = res;
+  const { code, msg } = res;
   switch (code) {
     case 0:
       resolve(res);
       break;
     case -1:
       // 需要单独处理的
-      break
+      break;
     default:
-      Message.error(msg)
-      reject(res)
+      Message.error(msg);
+      reject(res);
       break;
   }
 }
