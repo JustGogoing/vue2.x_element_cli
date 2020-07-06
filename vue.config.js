@@ -1,11 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-07-05 17:07:38
- * @LastEditTime: 2020-07-05 17:41:03
+ * @LastEditTime: 2020-07-06 11:04:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-admin-cli/vue.config.js
  */
+const path = require("path");
 
 module.exports = {
   pages: {
@@ -20,8 +21,26 @@ module.exports = {
   },
   configureWebpack: {
     externals: {
-      vue: "Vue",
-      ElementUI: "ElementUI"
+      'vue': 'Vue',
+      'element-ui': 'ELEMENT'
+    }
+  },
+  chainWebpack(config) {
+    config.resolve.alias
+      .set("@com", resolve("src/components"))
+      .set("@views", resolve("src/views"))
+      .set("@api", resolve("src/api"))
+      .set("$static", resolve("./static"));
+  },
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: `@import "~@/styles/mixins.scss";`
+      }
     }
   }
 };
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
