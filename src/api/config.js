@@ -1,13 +1,14 @@
 /*
  * @Author: sdx
  * @Date: 2020-07-05 17:40:35
- * @LastEditTime: 2020-07-06 18:27:13
+ * @LastEditTime: 2020-07-06 18:42:12
  * @LastEditors: Please set LastEditors
  * @Description: 调用封装的axios,实现不同的数据请求格式
  * @FilePath: /vue-admin-cli/src/api/config.js
  */
 /**
  * 待做
+ * 取消重复请求
  * 大文件上传下载这块
  * 多个并发请求的处理
  * 请求的取消
