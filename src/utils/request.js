@@ -9,11 +9,8 @@
 
 import axios from "axios";
 import store from "@store";
-import NProgress from "nprogress";
 import config from "../config";
 import { Message } from "element-ui";
-
-import "nprogress/nprogress.css";
 
 const service = axios.create({
   baseURL: config.BASE_URL, // api的base_url
@@ -23,7 +20,6 @@ const service = axios.create({
 // 请求的拦截
 service.interceptors.request.use(
   config => {
-    NProgress.start();
     // 头部添加token信息
     if (store.common.getter.getToken) {
       config.headers["X-Token"] = store.common.getter.getToken;
@@ -38,7 +34,6 @@ service.interceptors.request.use(
 // 相应的全局拦截
 axios.interceptors.response.use(
   response => {
-    NProgress.done();
     if (response.status === 200) {
       return response.data;
     } else {

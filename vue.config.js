@@ -13,7 +13,7 @@ module.exports = {
     index: {
       // page 的入口
       entry: "src/main.js",
-      title: "考研掌中宝后台管理系统"
+      title: "后台管理系统"
     }
   },
   devServer: {

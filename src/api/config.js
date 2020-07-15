@@ -12,12 +12,36 @@
  * 大文件上传下载这块
  * 多个并发请求的处理
  * 请求的取消
+ * 断网
  */
 
 import qs from "qs";
 import { Message } from "element-ui";
-
 import service from "@/utils/request.js";
+// const Methods = ['GET', 'POST', 'DELETE', 'PUT', 'HEAD', 'PATCH']
+// /**
+//  * 封装请求函数
+//  * @param {*} type 请求方法
+//  * @param {*} url 
+//  * @param {*} params 
+//  * @param {*} options 
+//  */
+// export default function request(type, url, data={}, options={}) {
+//   type = type.toUpperCase();
+//   if(Methods.indexOf(type) === -1) {
+//     Message.error('请求方法错误')
+//     return
+//   }
+//   const config = setConfig(options);
+//   return new Promise((resolve, reject) => {
+//     service[type](url, qs.stringify(data), config).then(res => {
+//       errCodeHandler(res, resolve, reject);
+//     }).catch(err => {
+//       reject(err);
+//     })
+//   })
+// }
+
 
 /**
  * get 请求,
@@ -68,17 +92,27 @@ export function POST(url, data, options = {}) {
 /**
  * 对于一些请求需要单独处理
  * @param {Object} options
- * @param {Object} options.type  header的几种类型, 如下
- * @param {Object} options.responseType 返回的数据类型
+ * @param {Number} options.type  header的几种类型, 如下
+ * @param {String} options.responseType 返回的数据类型
+ * @param {Function} options.upcb 上传函数进度的回调函数
+ * @param {Function} options.downcb 下载函数进度的回调函数
  * xxx  对于请求过期时间可能还要单独处理以适应上传等
  */
 function setConfig(options) {
-  const { type = 0, responseType = "json" } = options;
+  const { type = 0, responseType = "json", upcb, downcb } = options;
   const Header = setHeader(type);
-  return {
+  
+  let header = {
     headers: Header,
     responseType
   };
+  if(upcb) {
+    header[onUploadProgress] = upcb
+  }
+  if(downcb) {
+    header[onDownloadProgress] = downcb
+  }
+  return header; 
 }
 
 /**
