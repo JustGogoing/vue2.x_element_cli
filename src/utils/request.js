@@ -12,6 +12,18 @@ import store from "@store";
 import config from "../config";
 import { Message } from "element-ui";
 
+const cancelToken = axios.cancelToken;
+let pending = [];
+const removePending = (config) => {
+  for(let p in pending){
+      if(pending[p].u === config.url.split('?')[0] + '&' + config.method) { 
+      //当当前请求在数组中存在时执行函数体
+        pending[p].f(); //执行取消操作
+        pending.splice(p, 1); //数组移除当前请求
+      }
+  }
+}
+
 const service = axios.create({
   baseURL: config.BASE_URL, // api的base_url
   timeout: 5000 // 请求超时时间
@@ -20,6 +32,12 @@ const service = axios.create({
 // 请求的拦截
 service.interceptors.request.use(
   config => {
+    // 发送请求前先取消一下看看
+    removePending(config);
+    config.cancelToken = new cancelToken((c)=>{
+      // pending存放每一次请求的标识，一般是url + 参数名 + 请求方法，当然你可以自己定义
+      pending.push({ u: config.url.split('?')[0] +'&' + config.method, f: c});//config.data为请求参数
+    });
     // 头部添加token信息
     if (store.common.getter.getToken) {
       config.headers["X-Token"] = store.common.getter.getToken;
