@@ -9,42 +9,38 @@
 
 import Vue from "vue";
 import VueRouter from "vue-router";
-import NProgress from "nprogress";
-import Home from "../views/Home.vue";
-import "nprogress/nprogress.css";
+import Layout from "@/Layout";
+import BashRoutes from "./modules/bash";
+// import SetMenus from "./modules/setMenus";
+// import PermissionMenus from "./modules/permissionMenus";
 
 Vue.use(VueRouter);
 
 const routes = [
+  ...BashRoutes,
   {
     path: "/",
-    name: "Home",
-    component: Home
+    component: Layout,
+    redirect: "dashboard",
+    children: [
+      {
+        path: "dashboard",
+        name: "dashboard",
+        component: () =>
+          import(/* webpackChunkName: "dashboard"  */ "@views/Dashboard"),
+        meta: { title: "dashboard", icon: "dashboard" }
+      }
+    ]
   },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+  // 404 page must be placed at the end !!!
+  { path: "*", redirect: "/404", hidden: true }
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
+  scrollBehavior: () => ({ y: 0 }),
   routes
-});
-
-router.beforeEach((to, from, next) => {
-  NProgress.start();
-  next();
-});
-
-router.afterEach(() => {
-  NProgress.done();
 });
 
 export default router;

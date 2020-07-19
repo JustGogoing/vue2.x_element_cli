@@ -75,18 +75,18 @@ export function POST(url, data, options = {}) {
 function setConfig(options) {
   const { type = 0, responseType = "json", upcb, downcb } = options;
   const Header = setHeader(type);
-  
+
   let header = {
     headers: Header,
     responseType
   };
-  if(upcb) {
-    header[onUploadProgress] = upcb
+  if (upcb) {
+    header.onUploadProgress = upcb;
   }
-  if(downcb) {
-    header[onDownloadProgress] = downcb
+  if (downcb) {
+    header.onDownloadProgress = downcb;
   }
-  return header; 
+  return header;
 }
 
 /**
