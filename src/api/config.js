@@ -8,40 +8,14 @@
  */
 /**
  * 待做
- * 取消重复请求
- * 大文件上传下载这块
- * 多个并发请求的处理
- * 请求的取消
- * 断网
+ * 大文件上传下载这块, // 组件中封装
+ * 多个并发请求的处理 // axios.all
+ * 请求的取消 // cancelToken
  */
 
 import qs from "qs";
 import { Message } from "element-ui";
 import service from "@/utils/request.js";
-// const Methods = ['GET', 'POST', 'DELETE', 'PUT', 'HEAD', 'PATCH']
-// /**
-//  * 封装请求函数
-//  * @param {*} type 请求方法
-//  * @param {*} url 
-//  * @param {*} params 
-//  * @param {*} options 
-//  */
-// export default function request(type, url, data={}, options={}) {
-//   type = type.toUpperCase();
-//   if(Methods.indexOf(type) === -1) {
-//     Message.error('请求方法错误')
-//     return
-//   }
-//   const config = setConfig(options);
-//   return new Promise((resolve, reject) => {
-//     service[type](url, qs.stringify(data), config).then(res => {
-//       errCodeHandler(res, resolve, reject);
-//     }).catch(err => {
-//       reject(err);
-//     })
-//   })
-// }
-
 
 /**
  * get 请求,

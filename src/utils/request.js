@@ -54,6 +54,9 @@ axios.interceptors.response.use(
   response => {
     if (response.status === 200) {
       return response.data;
+    } else if(!response.response) {
+      // 断网
+      return Promise.reject('网络错误');
     } else {
       httpErrorHandler(response);
       return Promise.reject(response.statusText);
