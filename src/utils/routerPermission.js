@@ -37,7 +37,7 @@ export function reFactoryRoutes(roleRoutes, dyRoutes = DyRoutes) {
   roleRoutes.forEach(e => {
     const route = dyRoutes.find(route => route.path === e.path); // find函数不支持ie11以下
     if (route !== undefined) {
-      if (e.children&&e.children.length > 0) {
+      if (e.children && e.children.length > 0) {
         let dyChildren = route;
         const children = reFactoryRoutes(e.children, route.children);
         dyChildren.children = children;
