@@ -1,13 +1,7 @@
-/*
- * @Author: your name
- * @Date: 2020-07-06 16:55:12
- * @LastEditTime: 2020-07-06 17:09:04
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /vue-admin-cli/src/store/common/state.js
- */
-
+import { getToken } from "@/utils/auth";
 const state = {
-  token: "token11"
+  token: getToken(),
+  role: "",
+  routes: []
 };
 export default state;

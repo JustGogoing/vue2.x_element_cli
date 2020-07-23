@@ -10,15 +10,13 @@ const BashRouters = [
   {
     path: "/401",
     name: "401",
-    component: () =>
-      import(/* webpackChunkName: "bash" */ "@views/Error/error401"),
+    component: () => import(/* webpackChunkName: "bash" */ "@views/Error/401"),
     meta: { title: "401" }
   },
   {
     path: "/404",
     name: "404",
-    component: () =>
-      import(/* webpackChunkName: "bash" */ "@views/Error/error404"),
+    component: () => import(/* webpackChunkName: "bash" */ "@views/Error/404"),
     meta: { title: "404" }
   }
 ];

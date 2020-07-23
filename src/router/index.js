@@ -1,5 +1,5 @@
 /*
- * @Author: your name
+ * @Author: sdx
  * @Date: 2020-07-05 17:03:22
  * @LastEditTime: 2020-07-06 19:01:29
  * @LastEditors: Please set LastEditors
@@ -11,8 +11,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Layout from "@/Layout";
 import BashRoutes from "./modules/bash";
-// import SetMenus from "./modules/setMenus";
-// import PermissionMenus from "./modules/permissionMenus";
 
 Vue.use(VueRouter);
 

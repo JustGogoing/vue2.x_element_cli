@@ -1,10 +1,5 @@
-/*
- * @Author: your name
- * @Date: 2020-07-06 16:57:28
- * @LastEditTime: 2020-07-06 16:57:59
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /vue-admin-cli/src/store/common/types.js
- */
-
-export const SET_TOKEN = "SET_TOKEN";
+export const SET_ROLE = "SET_ROLE"; // 设置用户角色
+export const ADD_ROUTES = "ADD_ROUTES"; // 添加路由
+export const SET_TOKEN = "SET_TOKEN"; // 保存token
+export const GET_USERINFO = "GET_USERINFO"; // 获取用户信息
+export const GET_ROUTES = "GET_ROUTES"; // 获取路由

@@ -8,7 +8,7 @@
 <script>
 import allDyRoutes from "@/router/modules";
 export default {
-  name: "404",
+  name: "err404",
   methods: {
     addRoutes() {
       console.log("add");
