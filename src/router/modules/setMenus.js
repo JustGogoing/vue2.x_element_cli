@@ -9,7 +9,14 @@ const setMenus = {
     {
       path: "index",
       name: "set",
-      component: () => import(/* webpackChunkName: "set"  */ "@views/Set")
+      component: () => import(/* webpackChunkName: "set"  */ "@views/Set"),
+      children: [
+        {
+          path: "index-a",
+          name: "seta",
+          component: () => import(/* webpackChunkName: "set"  */ "@views/Login")
+        }
+      ]
     }
   ]
 };

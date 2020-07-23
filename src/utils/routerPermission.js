@@ -7,7 +7,7 @@ import DyRoutes from "@/router/modules"; // 获取动态路由集合
 
 /**
  * 对原始路由列表处理成可保存的k-v数据,方便保存在数据库
- * 主要在设置角色权限并保存的时候使用
+ * 主要在设置角色权限并保存到数据库的时候使用
  * @param {Array} arr, 默认为全局动态路由, 在设置角色的时候可以传入对应的
  * @returns {Array} 返回的是路由整理后的k-v数据对象
  */
@@ -16,7 +16,7 @@ export function factoryRoutes(arr = DyRoutes) {
   arr.forEach(route => {
     let tmp = {};
     tmp.path = route.path;
-    tmp.meta = route.meta || {};
+    // tmp.meta = route.meta || {};
     if (route.children) {
       tmp.children = factoryRoutes(route.children);
     }
@@ -48,4 +48,24 @@ export function reFactoryRoutes(roleRoutes, dyRoutes = DyRoutes) {
     }
   });
   return res;
+}
+
+/**
+ * 判断路由是不是当前的动态权限路由列表中的
+ */
+let pathArr = [];
+export async function checkDyRoute(route, routes) {
+  setPathArr(routes);
+  return pathArr.includes(route);
+}
+// 递归生成路由集合
+function setPathArr(routes, pre = "") {
+  console.log(routes);
+  routes.forEach(e => {
+    e.path = pre + e.path;
+    pathArr.push(e.path);
+    if (e.children && e.children.length > 0) {
+      setPathArr(e.children, e.path + "/");
+    }
+  });
 }

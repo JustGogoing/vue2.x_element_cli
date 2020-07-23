@@ -1,7 +1,7 @@
 import { setToken } from "@/utils/auth";
 import * as types from "./types";
-// import allRoutes from "@/router/modules";
-import { factoryRoutes, reFactoryRoutes } from "@/utils/routerPermission";
+// import DyRoutes from "@/router/modules";
+import { factoryRoutes } from "@/utils/routerPermission";
 const action = {
   /**
    * 登陆获取token
@@ -26,12 +26,11 @@ const action = {
       routerArr = factoryRoutes();
     } else {
       // 不是超管获取角色对应的权限,然后转化
-      const arr = await dispatch("GET_ROLE_ROUTES", user.role);
-      routerArr = factoryRoutes(arr);
+      routerArr = await dispatch("GET_ROLE_ROUTES", user.role);
     }
     await commit(types.SET_ROLE, user.role);
     await commit(types.ADD_ROUTES, routerArr);
-    return reFactoryRoutes(routerArr);
+    return routerArr;
   },
   /**
    * 根据用户身份获取用户路由列表
