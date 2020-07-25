@@ -2,6 +2,7 @@ import { getToken } from "@/utils/auth";
 const state = {
   token: getToken(),
   role: "",
-  routes: []
+  routes: [],
+  isCollapse: false
 };
 export default state;

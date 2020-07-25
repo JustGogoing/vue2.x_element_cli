@@ -4,7 +4,7 @@ const setMenus = {
   path: "/permission",
   component: Layout,
   redirect: "/permission/user",
-  meta: { title: "权限管理", icon: "lock" },
+  meta: { title: "权限管理", icon: "el-icon-lock" },
   children: [
     {
       path: "user",

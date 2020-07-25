@@ -9,27 +9,13 @@
 
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Layout from "@/Layout";
 import BashRoutes from "./modules/bash";
-
+import CommonRoutes from "./modules/common";
 Vue.use(VueRouter);
 
 const routes = [
   ...BashRoutes,
-  {
-    path: "/",
-    component: Layout,
-    redirect: "/dashboard",
-    children: [
-      {
-        path: "dashboard",
-        name: "dashboard",
-        component: () =>
-          import(/* webpackChunkName: "dashboard"  */ "@views/Dashboard"),
-        meta: { title: "dashboard", icon: "dashboard" }
-      }
-    ]
-  },
+  ...CommonRoutes,
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true }
 ];

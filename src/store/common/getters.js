@@ -1,7 +1,8 @@
+import { reFactoryRoutes } from "@/utils/routerPermission";
 const getters = {
-  getRoutes() {
-    // const routes = JSON.parse(state.routes);
-    return [];
+  // 对vuex中的路由处理为真正的路由
+  getRoutes(state) {
+    return reFactoryRoutes(state.routes);
   }
 };
 

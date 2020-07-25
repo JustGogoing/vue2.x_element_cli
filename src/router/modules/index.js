@@ -9,9 +9,10 @@
 
 const files = require.context(".", false, /\.js$/);
 const modules = [];
+const notCover = ["./index.js", "./bash.js", "./common.js"];
 
 files.keys().forEach(key => {
-  if (key === "./index.js" || key === "./bash.js") return;
+  if (notCover.includes(key)) return;
   const item = files(key).default;
   modules.push(item);
 });
