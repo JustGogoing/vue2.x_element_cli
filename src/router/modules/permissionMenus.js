@@ -9,12 +9,14 @@ const setMenus = {
     {
       path: "user",
       name: "user",
+      meta: { title: "用户管理" },
       component: () =>
         import(/* webpackChunkName: "permission"  */ "@views/Permission/user")
     },
     {
       path: "role",
       name: "role",
+      meta: { title: "角色管理" },
       component: () =>
         import(/* webpackChunkName: "permission"  */ "@views/Permission/role")
     }

@@ -9,13 +9,14 @@ const CommonRouters = [
     path: "/",
     component: Layout,
     redirect: "/dashboard",
+    meta: { title: "dashboard", icon: "el-icon-house" },
     children: [
       {
         path: "dashboard",
         name: "dashboard",
+        meta: { title: "dashboard" },
         component: () =>
-          import(/* webpackChunkName: "dashboard"  */ "@views/Dashboard"),
-        meta: { title: "dashboard", icon: "dashboard" }
+          import(/* webpackChunkName: "dashboard"  */ "@views/Dashboard")
       }
     ]
   }

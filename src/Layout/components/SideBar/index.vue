@@ -1,8 +1,9 @@
 <template>
   <div :class="isCollapse ? '' : 'menu-wrap'">
     <el-menu
+      router
       :collapse="isCollapse"
-      default-active="0"
+      default-active="/"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -10,21 +11,22 @@
       text-color="#fff"
       active-text-color="#ffd04b"
     >
-      <el-menu-item
-        :index="index+''"
-        v-for="(item, index) in getRoutes"
+      <side-bar-item
+        v-for="item in combineRoute"
         :key="item.path"
-      >
-        <i :class="item.meta.icon"></i>
-        <span slot="title">{{ item.meta.title }}</span>
-      </el-menu-item>
+        :item="item"
+        :path="item.path"
+      />
     </el-menu>
   </div>
 </template>
 
 <script>
+import commonRoutes from "@/router/modules/common";
 import { mapGetters, mapState } from "vuex";
+import SideBarItem from "./SideBarItem";
 export default {
+  components: { SideBarItem },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -35,7 +37,10 @@ export default {
   },
   computed: {
     ...mapGetters("common", ["getRoutes"]),
-    ...mapState("common", ["isCollapse"])
+    ...mapState("common", ["isCollapse"]),
+    combineRoute() {
+      return [...commonRoutes, ...this.getRoutes];
+    }
   }
 };
 </script>

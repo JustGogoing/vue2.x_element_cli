@@ -9,11 +9,19 @@ const setMenus = {
     {
       path: "index",
       name: "set",
+      meta: { title: "设置" },
       component: () => import(/* webpackChunkName: "set"  */ "@views/Set"),
       children: [
         {
           path: "index-a",
           name: "seta",
+          meta: { title: "设置a" },
+          component: () => import(/* webpackChunkName: "set"  */ "@views/Login")
+        },
+        {
+          path: "index-b",
+          name: "setb",
+          meta: { title: "设置b" },
           component: () => import(/* webpackChunkName: "set"  */ "@views/Login")
         }
       ]

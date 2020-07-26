@@ -45,9 +45,9 @@ router.beforeEach(async (to, from, next) => {
           if (redirectUrl && to.name === "404") {
             next(path);
           } else {
+            console.log(from, to);
             next();
           }
-          next();
         } else {
           next();
         }

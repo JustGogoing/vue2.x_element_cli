@@ -60,7 +60,6 @@ export async function checkDyRoute(route, routes) {
 }
 // 递归生成路由集合
 function setPathArr(routes, pre = "") {
-  console.log(routes);
   routes.forEach(e => {
     e.path = pre + e.path;
     pathArr.push(e.path);
