@@ -16,18 +16,11 @@ const action = {
    * 根据token获取用户信息,
    * 用户信息中有角色,和该角色对应的路由列表
    */
-  async GET_USERINFO({ commit, dispatch }) {
-    // 这里调用获取用户信息接口
-    // 保存该角色的路由列表和角色
+  async GET_USERINFO({ commit, dispatch }, token) {
+    // 这里调用获取用户信息接口,
+    console.log(token);
     const user = { role: "superAdmin" }; // mock 后端传回的信息
-    let routerArr = null;
-    // 如果是超管,就直接本地获取全部路由列表
-    if (user.role === "superAdmin") {
-      routerArr = factoryRoutes();
-    } else {
-      // 不是超管获取角色对应的权限,然后转化
-      routerArr = await dispatch("GET_ROLE_ROUTES", user.role);
-    }
+    const routerArr = dispatch("GET_ROLE_ROUTES", user.role);
     await commit(types.SET_ROLE, user.role);
     await commit(types.ADD_ROUTES, routerArr);
     return routerArr;
@@ -37,8 +30,17 @@ const action = {
    */
   /* eslint-disable-next-line */
   async GET_ROLE_ROUTES({ commit }, role) {
+    let routerArr = null;
+
     // 调用根据用户角色请求路由的接口
-    return [];
+    // 如果是超管,就直接本地获取全部路由列表
+    if (role === "superAdmin") {
+      routerArr = factoryRoutes(); // 正常接口获取的不需要fac,
+    } else {
+      // 不是超管就调用接口获取 xxx
+      routerArr = factoryRoutes([]);
+    }
+    return routerArr;
   }
 };
 export default action;

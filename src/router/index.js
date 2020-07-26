@@ -20,6 +20,12 @@ const routes = [
   { path: "*", redirect: "/404", hidden: true }
 ];
 
+// 修复重复push当前路由的报错
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+};
+
 const router = new VueRouter({
   mode: "hash",
   base: process.env.BASE_URL,

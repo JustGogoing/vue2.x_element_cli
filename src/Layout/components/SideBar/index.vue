@@ -3,7 +3,7 @@
     <el-menu
       router
       :collapse="isCollapse"
-      default-active="/"
+      :default-active="activeMenu"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -40,6 +40,15 @@ export default {
     ...mapState("common", ["isCollapse"]),
     combineRoute() {
       return [...commonRoutes, ...this.getRoutes];
+    },
+    activeMenu() {
+      const route = this.$route;
+      const { meta, path } = route;
+      // if set path, the sidebar will highlight the path you set
+      if (meta.activeMenu) {
+        return meta.activeMenu;
+      }
+      return path;
     }
   }
 };

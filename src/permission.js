@@ -28,12 +28,14 @@ router.beforeEach(async (to, from, next) => {
       /// ###这块可能写复杂了, 可以改为路由不保存在vuex中,每次刷新重新调接口获取挂载即可###
       // 这里获取判断是否已经有存在本地的路由,并且未挂载到实例上
       // 有的话将本地的挂载到路由上继续, 没有的话获取
-      const { role, routes } = store.state.common;
-      const hasRoles = role && routes.length > 0;
+      const { role } = store.state.common;
+      const hasRoles = role.length > 0;
       if (hasRoles) {
         // 刷新的时候要将vuex中的路由重新addRoutes
         // 通过count防止每次跳转重复挂载
+        let routes = [];
         if (count === 0) {
+          routes = await store.dispatch(`common/GET_ROLE_ROUTES`, role);
           router.addRoutes(await reFactoryRoutes(routes));
           ++count;
         }
@@ -45,7 +47,6 @@ router.beforeEach(async (to, from, next) => {
           if (redirectUrl && to.name === "404") {
             next(path);
           } else {
-            console.log(from, to);
             next();
           }
         } else {
@@ -57,7 +58,7 @@ router.beforeEach(async (to, from, next) => {
          * 2. 根据用户角色获取路由列表
          * 3. 动态挂载并保存
          */
-        const routes = await store.dispatch(`common/GET_USERINFO`);
+        const routes = await store.dispatch(`common/GET_USERINFO`, token);
         router.addRoutes(reFactoryRoutes(routes));
         next({ ...to, replace: true });
       }

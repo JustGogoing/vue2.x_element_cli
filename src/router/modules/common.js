@@ -14,7 +14,7 @@ const CommonRouters = [
       {
         path: "dashboard",
         name: "dashboard",
-        meta: { title: "dashboard" },
+        meta: { title: "dashboard", activeMenu: "/" },
         component: () =>
           import(/* webpackChunkName: "dashboard"  */ "@views/Dashboard")
       }
