@@ -1,3 +1,5 @@
+/// 目前只支持一级子路由,多级路由暂不支持
+
 /**
  * 对router进行处理
  * 递归生成数组,
@@ -54,7 +56,7 @@ export function reFactoryRoutes(roleRoutes, dyRoutes = DyRoutes) {
  * 判断路由是不是当前的动态权限路由列表中的
  */
 let pathArr = [];
-export async function checkDyRoute(route, routes) {
+export function checkDyRoute(route, routes) {
   setPathArr(routes);
   return pathArr.includes(route);
 }

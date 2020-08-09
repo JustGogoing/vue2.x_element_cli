@@ -1,4 +1,4 @@
-import Layout from "@/Layout";
+import Layout from "@/layout";
 
 const setMenus = {
   path: "/set",

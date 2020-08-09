@@ -2,7 +2,7 @@
  * 静态路由,但是要能读取的
  * 不同于bash之中的
  */
-import Layout from "@/Layout";
+import Layout from "@/layout";
 
 const CommonRouters = [
   {
