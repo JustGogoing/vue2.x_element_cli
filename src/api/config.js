@@ -27,7 +27,7 @@ export function GET(url, params = {}, options = {}) {
   const config = setConfig(options);
   return new Promise((resolve, reject) => {
     service
-      .get(url, params, config)
+      .get(url, params, ...config)
       .then(res => {
         // resolve(res);
         errCodeHandler(res, resolve, reject);
@@ -48,7 +48,7 @@ export function POST(url, data, options = {}) {
   const config = setConfig(options);
   return new Promise((resolve, reject) => {
     service
-      .post(url, qs.stringify(data), config)
+      .post(url, qs.stringify(data), ...config)
       .then(res => {
         // resolve(res);
         errCodeHandler(res, resolve, reject);

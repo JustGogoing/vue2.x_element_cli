@@ -50,7 +50,7 @@ service.interceptors.request.use(
 );
 
 // 相应的全局拦截
-axios.interceptors.response.use(
+service.interceptors.response.use(
   response => {
     if (response.status === 200) {
       return response.data;
