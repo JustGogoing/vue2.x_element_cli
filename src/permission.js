@@ -6,8 +6,7 @@ import store from "./store";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { getToken } from "@/utils/auth";
-import { reFactoryRoutes, checkDyRoute } from "@/utils/routerPermission";
-
+import { reFactoryRoutes } from "@/utils/routerPermission";
 // 不会被重定向的白名单, 可以从router/modules/bash.js中获取
 const whiteList = ["/login"];
 let count = 0;
@@ -37,20 +36,9 @@ router.beforeEach(async (to, from, next) => {
         if (count === 0) {
           routes = await store.dispatch(`common/GET_ROLE_ROUTES`, role);
           router.addRoutes(await reFactoryRoutes(routes));
+          // 通配符动态添加, 就不会发生动态路由挂载后还会404了
+          router.push({ path: "*", redirect: "/404", hidden: true });
           ++count;
-        }
-        // 这里用于修复刷新时路由已经重新挂载但是还是会跳转404的情况
-        if (to.redirectedFrom) {
-          const path = to.redirectedFrom;
-          const redirectUrl = await checkDyRoute(path, routes);
-          // 判断这个重定向来源地址是不是动态地址列表里面的, 不是的话继续404
-          if (redirectUrl && to.name === "404") {
-            next(path);
-          } else {
-            next();
-          }
-        } else {
-          next();
         }
       } else {
         /**
@@ -60,6 +48,8 @@ router.beforeEach(async (to, from, next) => {
          */
         const routes = await store.dispatch(`common/GET_USERINFO`, token);
         router.addRoutes(reFactoryRoutes(routes));
+        // 通配符动态添加, 就不会发生动态路由挂载后还会404了
+        router.push({ path: "*", redirect: "/404", hidden: true });
         next({ ...to, replace: true });
       }
     }

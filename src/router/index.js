@@ -13,12 +13,7 @@ import BashRoutes from "./modules/bash";
 import CommonRoutes from "./modules/common";
 Vue.use(VueRouter);
 
-const routes = [
-  ...BashRoutes,
-  ...CommonRoutes,
-  // 404 page must be placed at the end !!!
-  { path: "*", redirect: "/404", hidden: true }
-];
+const routes = [...BashRoutes, ...CommonRoutes];
 
 // 修复重复push当前路由的报错
 const originalPush = VueRouter.prototype.push;
