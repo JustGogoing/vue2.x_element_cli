@@ -10,7 +10,6 @@
  * 待做
  * 大文件上传下载这块, // 组件中封装
  * 多个并发请求的处理 // axios.all
- * 请求的取消 // cancelToken
  */
 
 import qs from "qs";

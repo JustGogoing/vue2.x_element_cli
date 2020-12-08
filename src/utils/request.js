@@ -12,14 +12,14 @@ import store from "@store";
 import config from "../config";
 import { Message } from "element-ui";
 
-const cancelToken = axios.cancelToken;
+const cancelToken = axios.CancelToken;
 let pending = [];
 const removePending = config => {
   for (let p in pending) {
     if (pending[p].u === config.url.split("?")[0] + "&" + config.method) {
       //当当前请求在数组中存在时执行函数体
       pending[p].f(); //执行取消操作
-      pending.splice(p, 1); //数组移除当前请求
+      pending.splice(parseInt(p), 1); //数组移除当前请求
     }
   }
 };
@@ -52,11 +52,9 @@ service.interceptors.request.use(
 // 相应的全局拦截
 service.interceptors.response.use(
   response => {
+    removePending(response.config);
     if (response.status === 200) {
       return response.data;
-    } else if (!response.response) {
-      // 断网
-      return Promise.reject("网络错误");
     } else {
       httpErrorHandler(response);
       return Promise.reject(response.statusText);
