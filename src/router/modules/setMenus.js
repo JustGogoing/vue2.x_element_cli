@@ -1,4 +1,4 @@
-import Layout from "@/layout";
+import Layout from "@/Layout/index.vue";
 
 const setMenus = {
   path: "/set",
