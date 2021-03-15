@@ -1,31 +1,25 @@
-/*
- * @Author: sdx
- * @Date: 2020-07-05 17:40:35
- * @LastEditTime: 2020-07-06 18:58:25
- * @LastEditors: Please set LastEditors
- * @Description: 对axios进行封装以满足不同的请求需要
- * @FilePath: /vue-admin-cli/src/api/config.js
+/**
+ * 对于axios的封装
+ * 关于对重复请求的取消这块, 只是前端取消了后续操作, 请求仍会发出, 后端仍会多次收到,只是前端不再理会(需要测试)
+ * 所以还是需要增加触发调用时的防抖与loading
  */
-
 import axios from "axios";
-import store from "@store";
-import config from "../config";
+import store from "@/store/index";
 import { Message } from "element-ui";
 
-const cancelToken = axios.CancelToken;
-let pending = [];
-const removePending = config => {
-  for (let p in pending) {
+const { CancelToken } = axios;
+const pending = [];
+function _removePending(config, sended = true) {
+  if (!config.url) return;
+  for (const p in pending) {
     if (pending[p].u === config.url.split("?")[0] + "&" + config.method) {
-      //当当前请求在数组中存在时执行函数体
-      pending[p].f(); //执行取消操作
+      // 当当前请求在数组中存在时执行函数体
+      !sended && pending[p].f(); //执行取消操作
       pending.splice(parseInt(p), 1); //数组移除当前请求
     }
   }
-};
-
+}
 const service = axios.create({
-  baseURL: config.BASE_URL, // api的base_url
   timeout: 5000 // 请求超时时间
 });
 
@@ -33,47 +27,69 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // 发送请求前先取消一下看看
-    removePending(config);
-    config.cancelToken = new cancelToken(c => {
+    _removePending(config, false);
+    config.cancelToken = new CancelToken(c => {
       // pending存放每一次请求的标识，一般是url + 参数名 + 请求方法，当然你可以自己定义
-      pending.push({ u: config.url.split("?")[0] + "&" + config.method, f: c }); //config.data为请求参数
+      if (!config.url) return;
+      pending.push({
+        u: config.url.split("?")[0] + "&" + config.method,
+        f: c
+      }); //config.data为请求参数
     });
     // 头部添加token信息
-    if (store.common.getter.getToken) {
-      config.headers["X-Token"] = store.common.getter.getToken;
+    if (store.getters["account/token"]) {
+      config.headers["token"] = store.getters["account/token"];
     }
     return config;
   },
   err => {
+    // 请求发送错误
+    console.log("请求发送错误");
     return Promise.reject(err);
   }
 );
 
-// 相应的全局拦截
+// 响应的全局拦截
 service.interceptors.response.use(
   response => {
-    removePending(response.config);
+    // 请求结束从数组移除该请求
+    _removePending(response.config);
     if (response.status === 200) {
-      return response.data;
+      return _errCodeHandler(response.data);
     } else {
-      httpErrorHandler(response);
-      return Promise.reject(response.statusText);
+      const err = _httpErrorHandler(response);
+      return Promise.reject(err);
     }
   },
   err => {
+    // 响应错误
     return Promise.reject(err);
   }
 );
+/**
+ * 对请求错误代码的处理, 返回值-自定义
+ */
+function _errCodeHandler(res) {
+  const { code } = res;
+  switch (code) {
+    case 0:
+      return Promise.resolve(res);
+    default:
+      Message.error(res.message);
+      return Promise.reject(res);
+  }
+}
 
 // http状态码错误
-function httpErrorHandler(response) {
-  let { status: code, statusText } = response.status;
-  let err = {
-    code,
-    statusText
+function _httpErrorHandler(response) {
+  const { status, statusText } = response;
+  const err = {
+    status,
+    statusText,
+    message: ""
   };
   // 这里status：需要和服务器约定统一
-  switch (code) {
+  switch (status) {
     case 400:
       err.message = "请求错误";
       break;
@@ -84,7 +100,7 @@ function httpErrorHandler(response) {
       err.message = "拒绝访问";
       break;
     case 404:
-      err.message = `请求地址出错: ${response.config.url}`;
+      err.message = `请求地址出错: ${response.config.url || "no url"}`;
       break;
     case 408:
       err.message = "请求超时";
@@ -109,11 +125,7 @@ function httpErrorHandler(response) {
       break;
     default:
   }
-  Message({
-    type: "error",
-    message: err.message,
-    duration: 3000
-  });
+  return err;
 }
 
 export default service;
