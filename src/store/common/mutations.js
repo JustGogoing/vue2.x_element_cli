@@ -2,9 +2,9 @@ import * as types from "./types";
 
 export default {
   /**
-   * 存储token
+   * 存储user
    */
-  [types.SET_TOKEN](state, token) {
-    state.token = token;
+  [types.SAVE_USER](state, payload) {
+    state.user = payload;
   }
 };

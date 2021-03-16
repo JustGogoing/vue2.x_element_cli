@@ -48,13 +48,16 @@ export default {
     };
   },
   methods: {
-    ...mapActions("common", ["SAVE_TOKEN"]),
+    ...mapActions("common", ["SAVE_USER"]),
     login() {
       Api.login({
         acc: this.acc,
         pwd: md5(this.pwd)
       }).then(res => {
-        this.SAVE_TOKEN(res.data.token);
+        this.SAVE_USER(res.data);
+        this.$router.replace({
+          name: "dashboard"
+        });
       });
     }
   },

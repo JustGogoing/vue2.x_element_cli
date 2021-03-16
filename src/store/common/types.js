@@ -1,1 +1,1 @@
-export const SET_TOKEN = "SET_TOKEN"; // 保存token
+export const SAVE_USER = "SAVE_USER"; // 保存用户

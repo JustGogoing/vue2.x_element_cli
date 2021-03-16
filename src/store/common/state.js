@@ -1,8 +1,4 @@
-import { getToken } from "@/utils/auth";
 const state = {
-  token: getToken(),
-  role: "",
-  routes: [],
-  isCollapse: false
+  user: {}
 };
 export default state;

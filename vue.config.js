@@ -9,6 +9,7 @@
 const path = require("path");
 
 module.exports = {
+  lintOnSave: false,
   pages: {
     index: {
       // page 的入口
