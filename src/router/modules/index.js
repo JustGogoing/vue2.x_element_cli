@@ -1,18 +1,41 @@
-/**
- * DyRoutes
- * 获取所有以Menus结尾的为可动态配置的路由
- * 这里获取后生成总的动态路由列表
- * 在角色配置路由的时候,拿到这个表去筛选
- * 保存筛选后的为该角色的权限路由, 存入数据库
- * 角色登陆后获取该角色权限列表,动态添加到路由中
- */
+// 基础路由, 不需要权限的
+import Layout from "@/Layout";
+const BashRouters = [
+  {
+    path: "/",
+    component: Layout,
+    redirect: { name: "dashboard" },
+    meta: { title: "dashboard", icon: "el-icon-house" },
+    children: [
+      {
+        path: "dashboard",
+        name: "dashboard",
+        meta: { title: "dashboard", activeMenu: "/" },
+        component: () =>
+          import(/* webpackChunkName: "dashboard"  */ "@views/dashboard")
+      },
+      {
+        path: "banner",
+        name: "banner",
+        meta: { title: "banner", activeMenu: "/" },
+        component: () =>
+          import(/* webpackChunkName: "dashboard"  */ "@views/banner")
+      },
+      {
+        path: "works",
+        name: "works",
+        meta: { title: "works", activeMenu: "/" },
+        component: () =>
+          import(/* webpackChunkName: "dashboard"  */ "@views/works")
+      }
+    ]
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import(/* webpackChunkName: "bash" */ "@views/login"),
+    meta: { title: "登录" }
+  }
+];
 
-const files = require.context(".", false, /\.js$/);
-const modules = [];
-
-files.keys().forEach(key => {
-  const item = files(key).default;
-  modules.push(item);
-});
-
-export default modules;
+export default BashRouters;
