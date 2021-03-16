@@ -10,10 +10,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import BashRoutes from "./modules/bash";
-import CommonRoutes from "./modules/common";
+import LoginedRoutes from "./modules/logined";
 Vue.use(VueRouter);
 
-const routes = [...BashRoutes, ...CommonRoutes];
+const routes = [...BashRoutes, ...LoginedRoutes];
 
 // 修复重复push当前路由的报错
 const originalPush = VueRouter.prototype.push;
