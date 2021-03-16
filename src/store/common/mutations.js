@@ -6,5 +6,8 @@ export default {
    */
   [types.SAVE_USER](state, payload) {
     state.user = payload;
+  },
+  [types.EXIT](state) {
+    state.user = {};
   }
 };

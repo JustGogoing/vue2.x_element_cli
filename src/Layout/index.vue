@@ -26,13 +26,13 @@
 
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
+        <el-dropdown @command="handleCommand">
+          <span>{{ user.user_name }}</span>
           <i class="el-icon-setting" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>退出登陆</el-dropdown-item>
+            <el-dropdown-item command="exit">退出登陆</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span>{{ user.user_name }}</span>
       </el-header>
 
       <el-main>
@@ -46,11 +46,18 @@
 import { mapState } from "vuex";
 export default {
   name: "layout",
-  data() {
-    return {};
-  },
   computed: {
     ...mapState("common", ["user"])
+  },
+  methods: {
+    handleCommand(e) {
+      if (e === "exit") {
+        this.$store.dispatch("common/EXIT");
+        this.$router.replace({
+          name: "login"
+        });
+      }
+    }
   }
 };
 </script>

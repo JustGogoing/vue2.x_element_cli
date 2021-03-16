@@ -4,12 +4,24 @@
 import router from "./router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import store from "@/store";
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
   document.title = to.meta.title || "后台管理系统";
-  next();
+  const token = store.getters["common/token"];
+  if (to.name !== "login") {
+    if (token) {
+      next();
+    } else {
+      next({
+        name: "login"
+      });
+    }
+  } else {
+    next();
+  }
 });
 
 /**
