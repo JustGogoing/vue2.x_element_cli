@@ -22,6 +22,13 @@ const BashRouters = [
           import(/* webpackChunkName: "dashboard"  */ "@views/banner")
       },
       {
+        path: "addBanner",
+        name: "addBanner",
+        meta: { title: "addBanner", activeMenu: "/" },
+        component: () =>
+          import(/* webpackChunkName: "dashboard"  */ "@views/banner/add")
+      },
+      {
         path: "works",
         name: "works",
         meta: { title: "works", activeMenu: "/" },
