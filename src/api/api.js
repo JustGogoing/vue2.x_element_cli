@@ -14,5 +14,9 @@ export default {
    */
   bannerList: params => {
     return GET("/api/banner", params);
+  },
+  /*1.3 获取用户列表*/
+  getUsers: params => {
+    return GET("/api/users", params);
   }
 };

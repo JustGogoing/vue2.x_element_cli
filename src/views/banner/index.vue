@@ -72,7 +72,7 @@ export default {
       }
     };
   },
-  beforeMount() {
+  created() {
     this.load()
   },
   methods: {
@@ -88,7 +88,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .wrap {
     width: 100%;
     height: 80px;

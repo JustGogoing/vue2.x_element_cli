@@ -16,11 +16,11 @@
           <el-menu-item index="/banner">轮播图管理</el-menu-item>
           <el-menu-item index="/works">作品管理</el-menu-item>
         </el-submenu>
-        <el-submenu index="3">
+        <el-menu-item index="/user">
           <template slot="title"
             ><i class="el-icon-setting"></i>人员管理</template
           >
-        </el-submenu>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
