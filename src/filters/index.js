@@ -9,3 +9,13 @@ Vue.filter('timeAgo', function(dateTimeStamp) {
 	}
 });
 
+Vue.filter('role', function(role) {
+	role = parseInt(role)
+	switch (role) {
+		case 1:
+			return "管理员";
+		default:
+			return "管理员";
+	}
+});
+

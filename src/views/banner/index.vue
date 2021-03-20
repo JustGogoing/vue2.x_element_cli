@@ -11,7 +11,6 @@
     <!-- 表格 -->
     <el-table
       :data="banners.list"
-      height="250"
       style="width: 100%">
       <el-table-column
         label="链接"
@@ -57,7 +56,6 @@
         :total="banners.total">
       </el-pagination>
     </div>
-
   </div>
 </template>
 

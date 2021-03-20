@@ -1,4 +1,4 @@
-import { POST, GET } from "@/utils/http";
+import { POST, GET, DELETE } from "@/utils/http";
 export default {
   /**
    * 1.1 登录
@@ -18,5 +18,21 @@ export default {
   /*1.3 获取用户列表*/
   getUsers: params => {
     return GET("/api/users", params);
+  },
+  /*1.4 新增用户*/
+  addUser: params => {
+    return POST("/api/user", params);
+  },
+  /**
+   * 1.5 更新用户
+   */
+  updateUser: params => {
+    return POST("/api/updateUser", params)
+  },
+  /**
+   * 1.6 删除用户
+   */
+  removeUser: params => {
+    return DELETE("/api/removeUser", params)
   }
 };

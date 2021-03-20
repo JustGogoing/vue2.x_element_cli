@@ -6,6 +6,8 @@ export const GET = (url, params, loading, options) =>
 // post请求
 export const POST = (url, params, loading, options) =>
   _request("POST", url, params, loading, options);
+export const DELETE = (url, params, loading, options) =>
+  _request("DELETE", url, params, loading, options);
 
 function _request(method, url, params, loading = false, options) {
   if (loading) {
@@ -52,7 +54,7 @@ function _setConfig(options) {
     url,
     method
   };
-  if (method === "GET") {
+  if (method === "GET" || method === "DELETE") {
     config.params = params;
   } else {
     config.data = params;
