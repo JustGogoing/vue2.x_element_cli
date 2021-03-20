@@ -89,6 +89,7 @@
 <script>
 import Api from "@/api/api"
 import md5 from "md5"
+import { mapState  } from "vuex"
 export default {
     data() {
         return {
@@ -113,6 +114,9 @@ export default {
             }
         }
     },
+    computed: {
+      ...mapState("common", ["user"])
+    },
     created() {
         this.init()
     },
@@ -125,6 +129,13 @@ export default {
         // 删除用户
         deleteUser(i) {
           const { user_id:id, user_name } = this.users.list[i];
+          if(id===this.user.id) {
+            this.$message({
+              message: '不可以删除自己的账号',
+              type: 'warning'
+            });
+            return;
+          }
           this.$confirm(`确定要删除${user_name}吗?`, '警告', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -167,6 +178,7 @@ export default {
         },
         // 提交
         submitUser() {
+          const _this = this;
           this.$refs.editForm.validate((valid) => {
             if (valid) {
              const params = {
@@ -191,6 +203,18 @@ export default {
                    return e
                  })
                  this.users.list = nList;
+                 if( this.editForm.user_id === this.user.id) {
+                   this.$message({
+                      message: '请重新登陆',
+                      type: 'success'
+                    });
+                    setTimeout(() => {
+                      _this.$store.dispatch("common/EXIT");
+                      _this.$router.replace({
+                      name: "login"
+                    });
+                    }, 500)
+                 }
                })
                this.showEdit = !this.showEdit;
              }
