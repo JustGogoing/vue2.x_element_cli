@@ -34,5 +34,11 @@ export default {
    */
   removeUser: params => {
     return DELETE("/api/removeUser", params)
+  },
+  /**
+   * 2.1 获取作品列表
+   */
+  getWorks: params => {
+    return GET("/api/works", params)
   }
 };

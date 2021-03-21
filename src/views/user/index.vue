@@ -27,10 +27,14 @@
       </el-table-column>
       <el-table-column label="身份">
          <template slot-scope="scope">
-           {{scope.role | role}}
+           {{scope.row.role | role}}
          </template>
       </el-table-column>
-      <el-table-column label="创建时间" prop="create_time"/>
+      <el-table-column label="创建时间" prop="create_time">
+        <template slot-scope="scope">
+          {{scope.row.create_time | timeAgo}}
+        </template>
+      </el-table-column>
       <el-table-column
         fixed="right"
         label="操作">
