@@ -15,6 +15,16 @@ export default {
   bannerList: params => {
     return GET("/api/banner", params);
   },
+  /**
+   * 1.21 获取轮播图列表
+   * @param {number} params.page
+   */
+  delBanner: params => {
+    return DELETE("/api/banner", params);
+  },
+  addBanner: params => {
+    return POST("/api/banner", params, false, {type: 3})
+  },
   /*1.3 获取用户列表*/
   getUsers: params => {
     return GET("/api/users", params);

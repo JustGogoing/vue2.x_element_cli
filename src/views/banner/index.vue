@@ -17,7 +17,7 @@
         <template slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
-            :src="scope.row.banner_src"
+            :src="'http://127.0.0.1:7001'+scope.row.banner_src"
             fit="fill"></el-image>
         </template>
       </el-table-column>
@@ -30,6 +30,12 @@
         label="上传时间">
         <template slot-scope="scope">
           {{scope.row.create_time | timeAgo}}
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="作品id">
+        <template slot-scope="scope">
+          {{scope.row.work_id}}
         </template>
       </el-table-column>
       <el-table-column
@@ -74,7 +80,28 @@ export default {
   },
   methods: {
     deleteRow(i) {
-      console.log(i);
+          const { banner_id:id, banner_title } = this.banners.list[i];
+          this.$confirm(`确定要删除${banner_title}吗?`, '警告', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            Api.delBanner({id}).then(res => {
+              if(res.code === 0) {
+                this.banners.list.splice(i, 1);
+                this.banners.total -= 1;
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                });
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });          
+          });
     },
     load() {
       Api.bannerList().then(res => {
