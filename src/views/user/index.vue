@@ -39,17 +39,17 @@
         fixed="right"
         label="操作">
         <template slot-scope="scope">
-          <el-button
-            @click.native.prevent="deleteUser(scope.$index)"
-            type="text"
-            size="mini">
-            移除用户
-          </el-button>
             <el-button
             @click.native.prevent="editRow(scope.$index)"
-            type="text"
+            type="info"
             size="mini">
             编辑用户
+          </el-button>
+           <el-button
+            @click.native.prevent="deleteUser(scope.$index)"
+            type="danger"
+            size="mini">
+            移除用户
           </el-button>
         </template>
       </el-table-column>
@@ -59,8 +59,10 @@
         <el-pagination
             background
             layout="prev, pager, next"
-            :page-size="10"
-            :total="users.total">
+            :page-size="20"
+            :total="users.total"
+            @current-change="changePage"  
+          >
         </el-pagination>
     </div>
 
@@ -122,11 +124,14 @@ export default {
       ...mapState("common", ["user"])
     },
     created() {
-        this.init()
+        this.loadData()
     },
     methods: {
-        init() {
-            Api.getUsers().then(res => {
+      changePage(e) {
+        this.loadData(e)
+      },
+        loadData(page=1,size=20) {
+            Api.getUsers({page:--page, size}).then(res => {
                 this.users = res.data;
             })
         },
