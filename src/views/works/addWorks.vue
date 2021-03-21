@@ -11,7 +11,7 @@
         <el-form-item label="图片" prop="src">
           <el-upload
             action=""
-            accept="image/png, image/jpeg, image/jeg"
+            accept=".png, .jpeg, .jeg"
             :auto-upload="false"
             :show-file-list="false"
             :on-change='changeUpload'>
@@ -75,6 +75,7 @@ export default {
       formRules: {
         title: [{required: true, message: "请填写标题", trigger: "blur"}, {min: 2, max: 16, message: "标题在2~16个字符之间", trigger: "blur"}],
         link: [{required:  true, message: "请填写作品链接", trigger: "blur"}, {min: 2, message: "链接长度太短", trigger: "blur"}],
+        src: [{required: true, message: "请上传分享图片", trigger: "blur"}],
         desc: []
       },
       dialogVisible: false,
@@ -107,7 +108,7 @@ export default {
   },
   methods:{
     onSubmit() {
-      // this.loading = !this.loading;
+      this.loading = !this.loading;
       this.$refs.form.validate(e => {
         if(e) {
           const src = new window.File([this.bolbData], this.file.name, {type: this.file.type});
@@ -121,6 +122,7 @@ export default {
             if(res.code===0) {
               this.$message.success("发布成功")
             }
+            this.loading = !this.loading
             this.$refs.form.resetFields();
           })
         } else {
