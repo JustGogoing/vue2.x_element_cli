@@ -127,9 +127,9 @@ export default {
         this.loadData()
     },
     methods: {
-      changePage(e) {
-        this.loadData(e)
-      },
+        changePage(e) {
+          this.loadData(e)
+        },
         loadData(page=1,size=20) {
             Api.getUsers({page:--page, size}).then(res => {
                 this.users = res.data;
@@ -200,7 +200,7 @@ export default {
                Api.addUser(params).then(res => {
                 this.showEdit = !this.showEdit;
                  this.users.list = this.users.list.concat(res.data)
-                 this.users.total += 1;
+                //  this.users.total += 1;
               })
              } else {
                 Api.updateUser(params).then( res => {

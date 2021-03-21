@@ -12,11 +12,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import ElementUI from "element-ui";
+import VueCropper from 'vue-cropper'
 import "element-ui/lib/theme-chalk/index.css";
 import "normalize.css";
 import "./permission";
 import '@/filters';
-
+Vue.use(VueCropper)
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;

@@ -19,3 +19,8 @@ Vue.filter('role', function(role) {
 	}
 });
 
+
+Vue.filter('upLoadSrc', function(src) {
+	return process.env.VUE_APP_IMAGE + src
+});
+

@@ -5,8 +5,7 @@
       <el-col :span="6">
         <el-button size="medium" type="primary" icon="el-icon-plus" @click="$router.push({name: 'addBanner'})">发布</el-button>
       </el-col>
-      <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+      <el-col :span="18" />
     </el-row>
     <!-- 表格 -->
     <el-table
@@ -48,7 +47,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <div class="wrap">
+    <div class="wrap" v-if="banners.total">
       <el-pagination
         background
         layout="prev, pager, next"

@@ -40,5 +40,17 @@ export default {
    */
   getWorks: params => {
     return GET("/api/works", params)
+  },
+  /**
+   * 2.2 发表作品
+   */
+  addWorks: params => {
+    return POST("/api/works", params, false, {type: 3})
+  },
+  /**
+   * 2.3删除作品
+   */
+  removeWork: params => {
+    return DELETE("/api/works", params)
   }
 };
