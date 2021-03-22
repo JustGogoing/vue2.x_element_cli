@@ -8,6 +8,9 @@
         <el-form-item label="描述" prop="desc">
           <el-input type="textarea" v-model="form.desc" placeholder="分享时展示的描述"></el-input>
         </el-form-item>
+        <el-form-item label="推荐" prop="recommend">
+        <el-switch v-model="form.recommend"></el-switch>
+      </el-form-item>
         <el-form-item label="图片" prop="src">
           <el-upload
             action=""
@@ -70,13 +73,15 @@ export default {
         title: "",
         desc: "",
         src: "",
-        link: ""
+        link: "",
+        recommend: false
       },
       formRules: {
         title: [{required: true, message: "请填写标题", trigger: "blur"}, {min: 2, max: 16, message: "标题在2~16个字符之间", trigger: "blur"}],
         link: [{required:  true, message: "请填写作品链接", trigger: "blur"}, {min: 2, message: "链接长度太短", trigger: "blur"}],
         src: [{required: true, message: "请上传分享图片", trigger: "blur"}],
-        desc: []
+        desc: [],
+        recommend: []
       },
       dialogVisible: false,
       // 裁剪组件的基础配置option
@@ -117,6 +122,7 @@ export default {
           params.set("desc", this.form.desc);
           params.set("link", this.form.link);
           params.set("src", src);
+          params.set("status", this.form.recommend ? 1 : 0);
           params.set("id", this.user.id);
           Api.addWorks(params).then(res => {
             if(res.code===0) {
