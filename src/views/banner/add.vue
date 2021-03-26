@@ -6,7 +6,7 @@
           <el-input v-model="ruleForm.title" placeholder="填写标题"></el-input>
         </el-form-item>
         <el-form-item label="作品ID" prop="work_id">
-          <el-input type="number" v-model="ruleForm.work_id" placeholder="可填写已发布作品id"></el-input>
+          <el-input type="number" v-model="ruleForm.work_id" placeholder="可填写已发布作品ID"></el-input>
         </el-form-item>
         <el-form-item label="图片" prop="src">
           <el-upload
@@ -122,7 +122,7 @@ export default {
                 this.$message.success("发布成功")
               }
               this.loading = !this.loading
-              this.$refs.form.resetFields();
+              this.$refs.ruleForm.resetFields();
             })
           } else {
             this.loading = !this.loading

@@ -33,7 +33,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="作品id">
+        label="作品ID">
         <template slot-scope="scope">
           {{scope.row.work_id}}
         </template>

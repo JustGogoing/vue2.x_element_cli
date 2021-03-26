@@ -49,6 +49,18 @@
           {{scope.row.create_time | timeAgo}}
         </template>
       </el-table-column>
+      <el-table-column label="是否推荐">
+        <template slot-scope="scope">
+          <el-switch
+            :value="scope.row.status"
+            :active-value="1"
+            :inactive-value="0"
+            active-color="#13ce66"
+            @change="toggleRecommend(scope.row, scope.$index)"
+            inactive-color="#ff4949">
+          </el-switch>
+        </template>
+      </el-table-column>
       <el-table-column
         fixed="right"
         label="操作">
@@ -97,6 +109,15 @@ export default {
     this.loadData()
   },
   methods: {
+    // 切换推荐状态
+    toggleRecommend(e, i) {
+      Api.toggleRecommend({
+        id:e.work_id, status: e.status === 1 ? 0 : 1
+      }).then(() => {
+        this.works.list[i].status = this.works.list[i].status === 1 ? 0 : 1
+      })
+    },
+    // 换页
     changePage(e) {
       this.loadData(e)
     },

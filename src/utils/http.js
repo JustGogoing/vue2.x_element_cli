@@ -6,8 +6,12 @@ export const GET = (url, params, loading, options) =>
 // post请求
 export const POST = (url, params, loading, options) =>
   _request("POST", url, params, loading, options);
+// delete请求
 export const DELETE = (url, params, loading, options) =>
   _request("DELETE", url, params, loading, options);
+// put请求
+export const PUT = (url, params, loading, options) =>
+  _request("PUT", url, params, loading, options);
 
 function _request(method, url, params, loading = false, options) {
   if (loading) {

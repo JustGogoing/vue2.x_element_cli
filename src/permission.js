@@ -10,7 +10,7 @@ NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start();
-  document.title = to.meta.title || "后台管理系统";
+  document.title =  "后台管理系统";
   const token = store.getters["common/token"];
   if (to.name !== "login") {
     if (token) {

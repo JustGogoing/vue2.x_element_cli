@@ -1,4 +1,4 @@
-import { POST, GET, DELETE } from "@/utils/http";
+import { POST, GET, DELETE, PUT } from "@/utils/http";
 export default {
   /**
    * 1.1 登录
@@ -62,5 +62,11 @@ export default {
    */
   removeWork: params => {
     return DELETE("/api/works", params)
+  },
+  /**
+   * 2.4 切换作品更新状态
+   */
+  toggleRecommend: params => {
+    return PUT("/api/works", params)
   }
 };
