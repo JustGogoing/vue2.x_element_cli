@@ -52,10 +52,11 @@ function _setConfig(options) {
   } = options;
   // header 不止会有contenttype 这里以后要优化
   const headers = _setHeaders(type);
+  const URL = process.env.VUE_APP_API_URL  + url;
   const config = {
     headers,
     responseType,
-    url,
+    url:URL,
     method
   };
   if (method === "GET" || method === "DELETE") {
