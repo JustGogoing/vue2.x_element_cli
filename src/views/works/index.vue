@@ -35,7 +35,7 @@
         <template slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
-            :src="'http://127.0.0.1:7001'+scope.row.work_src"
+            :src="scope.row.work_src | upLoadSrc"
             fit="fill"></el-image>
         </template>
       </el-table-column>

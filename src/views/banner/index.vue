@@ -12,12 +12,12 @@
       :data="banners.list"
       style="width: 100%">
       <el-table-column
-        label="链接"
+        label="图片链接"
         width="180">
         <template slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
-            :src="'http://127.0.0.1:7001'+scope.row.banner_src"
+            :src="scope.row.banner_src | upLoadSrc"
             fit="fill"></el-image>
         </template>
       </el-table-column>

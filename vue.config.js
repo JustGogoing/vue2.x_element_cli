@@ -10,6 +10,7 @@ const path = require("path");
 
 module.exports = {
   lintOnSave: false,
+  publicPath: "/admin/",
   pages: {
     index: {
       // page 的入口
@@ -31,7 +32,6 @@ module.exports = {
       }
     }
   },
-  configureWebpack: {},
   chainWebpack(config) {
     config.resolve.alias
       .set("@com", resolve("src/components"))
