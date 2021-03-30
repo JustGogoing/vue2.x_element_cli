@@ -1,12 +1,19 @@
 <template>
   <div>
     <el-col :span="12">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="链接作品" name="work"></el-tab-pane>
+        <el-tab-pane label="链接小程序" name="mini"></el-tab-pane>
+      </el-tabs>
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" label-position="left" class="demo-ruleForm">
         <el-form-item label="标题" prop="title">
           <el-input v-model="ruleForm.title" placeholder="填写标题"></el-input>
         </el-form-item>
-        <el-form-item label="作品ID" prop="work_id">
+        <el-form-item label="作品ID" prop="work_id" v-show="activeName==='work'">
           <el-input type="number" v-model="ruleForm.work_id" placeholder="可填写已发布作品ID"></el-input>
+        </el-form-item>
+        <el-form-item label="APPID" prop="appid" v-show="activeName==='mini'">
+          <el-input type="text" v-model="ruleForm.appid" placeholder="填写要跳转的小程序的APPID"></el-input>
         </el-form-item>
         <el-form-item label="图片" prop="src">
           <el-upload
@@ -62,18 +69,20 @@ import { mapState } from "vuex";
 export default {
     data() {
         return {
+          activeName: "work",
           ruleForm: {
             title: '',
             work_id: "",
             src: "",
+            appid: ""
           },
           rules: {
             title: [
               { required: true, message: '请输入轮播图的标题', trigger: 'blur' },
               { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
             ],
-
             work_id: [],
+            appid: [],
             src: [
               {required: true, message: "请上传图片"}
             ]
@@ -91,7 +100,7 @@ export default {
               autoCropHeight: 120, // 默认生成截图框高度
               fixedBox: true, // 固定截图框大小 不允许改变
               fixed: true, // 是否开启截图框宽高固定比例
-              fixedNumber: [16, 9], // 截图框的宽高比例
+              fixedNumber: [2, 1], // 截图框的宽高比例
               full: true, // 是否输出原图比例的截图
               canMoveBox: false, // 截图框能否拖动
               original: false, // 上传图片按照原始比例渲染
@@ -114,7 +123,13 @@ export default {
             const src = new window.File([this.bolbData], this.file.name, {type: this.file.type});
             const params = new FormData();
             params.set("title", this.ruleForm.title);
-            params.set("work_id", this.ruleForm.work_id);
+            if(this.activeName==="mini") {
+              params.set("appid", this.ruleForm.appid);
+              params.set("type", this.ruleForm.appid ? 2 : 0);
+            } else {
+              params.set("work_id", this.ruleForm.work_id);
+              params.set("type", this.ruleForm.appid ? 1 : 0);
+            }
             params.set("src", src);
             params.set("user_id", this.user.id);
             Api.addBanner(params).then(res => {
